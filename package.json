@@ -1,0 +1,26 @@
+{
+  "name": "BackendChallenge1",
+  "version": "0.0.1",
+  "description": "A coding challenge for backend services",
+  "main": "dist",
+  "scripts": {
+    "test-lint-js": "docker pull g3dev/lintjs:latest && docker container run -v `pwd`:/home/node/src g3dev/lintjs:latest",
+    "test-lint-md": "docker pull g3dev/lintmd:latest && docker container run -v `pwd`:/home/node/src g3dev/lintmd:latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GriffinGroupGlobal/backend-challenge-1"
+  },
+  "keywords": [
+    "node",
+    "nodejs",
+    "microservice"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GriffinGroupGlobal/backend-challenge-1/issues"
+  },
+  "homepage": "https://github.com/GriffinGroupGlobal/backend-challenge-1#readme",
+  "dependencies": {},
+  "devDependencies": {}
+}
