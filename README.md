@@ -1,15 +1,15 @@
 # Griffin Group Global Front End Development Challenge
 
-Hi! Thank you for your interest in [Griffin Group Global][g3website]. Our evaluation processes begins with an open-ended coding challenge that we will discuss during your interview. There is not one correct way to approach this challenge. Rather, we would like to see your approach and your creativity in solving the problem.
+Hi! Thank you for your interest in [Griffin Group Global][g3website]. Our evaluation process begins with an open-ended coding challenge that we will discuss during your interview. There is not one correct way to approach this challenge. Rather, we would like to see your approach and your creativity in solving the problem.
 
 We appreciate that any coding challenge represents an investment of your time. We hope you see the value in having a code sample that is relatable to both of us for the interview. Should you be unsuccessful, you should feel free to use the code you developed for this challenge in any way that you would like.
 
 If you are successful, then we will set up an in-person interview and use this code as the starting point in our conversation.
 
 # The Challenge
-Griffin Group Global creates REST based microservices that are presented in a variety of ways. We use iOS native swift, Android based Java and JS based frameworks such as React for creating responsive web based presentations.
+Griffin Group Global creates REST-based microservices that are presented in a variety of ways. We use iOS native Swift, Android-based Java and JavaScript-based frameworks such as React for creating responsive web-based presentations.
 
-The challenge is to create a front end presentation for the [Star Wars API][swapi]. The idea is for you to have fun and be creative with your presentations. The star wars API has a standard restful interface for much of the star wars universe. These include:
+The challenge is to create a front-end presentation for the [Star Wars API][swapi]. The idea is for you to have fun and be creative with your presentations. The Star Wars API has a standard RESTful interface for types of data pertaining to the Star Wars universe. These include:
 - [Planets](https://swapi.co/api/planets/)
 - [Spaceships](https://swapi.co/api/starships/)
 - [Vehicles](https://swapi.co/api/vehicles/)
@@ -18,15 +18,15 @@ The challenge is to create a front end presentation for the [Star Wars API][swap
 - [Species](https://swapi.co/api/species/)
 
 ## Minimum Challenge Requirements
-We would like a minimum capability. These are:
-- Provide a presentation that provides a list of the star wars people
-- In this list, when the specific person is clicked, the persons name and gender are displayed.
-- Either a mobile application or a browser based presentation shall be created. If choosing a browser based presentation, it should render in Chrome, Safari and Firefox. IE and Edge support at your discretion.
+We would like your submission to offer a minimum capability. These are:
+- Provide a presentation that provides a list of the Star Wars people.
+- In this list, when the specific person is clicked, the person's name and gender are displayed.
+- Either a mobile application or a browser-based presentation shall be created. If choosing a browser-based presentation, it should render in Chrome, Safari and Firefox, with IE and Edge support at your discretion.
 
 ## Where to concentrate your effort
-In a UX/UI presentation, there are many areas that could be addressed. While implementing the minimum requirements, please feel to implement one or more items in these areas. Please do not feel limited to these areas if you would like to add your take on frontend development.
+In a UX/UI presentation, there are many areas that could be addressed. While implementing the minimum requirements, please feel to implement one or more items in these areas. Please do not feel limited to these areas if you would like to add your take on front-end development.
 
-- Providing more information about the star wars universe by following some of the extra links in the JSON data model
+- Providing more information about the Star Wars universe by following some of the extra links in the JSON data model
 - Error handling
 - Debug statements
 - [TDD]
@@ -57,8 +57,7 @@ Do not feel as though you must create a public fork of this repository. You are 
 
 # Evaluations
 
-We realize there are many items to look at when creating a user interface. Please do not feel like like you have to do everything. Please feel free to use any frontend language you wish. Use your strengths to your advantage. If you gravitate more towards design, provider a more visually appealing interface. If you gravitate more towards data consumption, provide more capability by using the API routes. Give us a heads up by documenting your code to let us know where and why you concentrated on certain
-items.
+We realize there are many items to look at when creating a user interface. Please do not feel like like you have to do everything. Please feel free to use any front-end language you wish. Use your strengths to your advantage. If you gravitate more towards design, provide a more visually appealing interface. If you gravitate more towards data consumption, provide more capability by using the API routes. Give us a heads up by documenting your code to let us know where and why you concentrated on certain items.
 
 As you develop your solution, you may have ideas on other avenues to pursue. Please feel free to include them inline as documented source or as additional [Common Mark][commonmark] compliant notes in your fork.
 
