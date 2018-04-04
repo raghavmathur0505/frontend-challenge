@@ -18,7 +18,7 @@ The challenge is to create a front-end presentation for the [Star Wars API][swap
 - [Species](https://swapi.co/api/species/)
 
 ## Minimum Challenge Requirements
-We would like your submission to offer a minimum capability. These are:
+We would like your submission to offer a minimum capability. The criteria are:
 - Provide a presentation that provides a list of the Star Wars people.
 - In this list, when the specific person is clicked, the person's name and gender are displayed.
 - Either a mobile application or a browser-based presentation shall be created. If choosing a browser-based presentation, it should render in Chrome, Safari and Firefox, with IE and Edge support at your discretion.
