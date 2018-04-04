@@ -57,7 +57,7 @@ Do not feel as though you must create a public fork of this repository. You are 
 
 # Evaluations
 
-We realize there are many items to look at when creating a user interface. Please do not feel like like you have to do everything. Please feel free to use any front-end language you wish. Use your strengths to your advantage. If you gravitate more towards design, provide a more visually appealing interface. If you gravitate more towards data consumption, provide more capability by using the API routes. Give us a heads up by documenting your code to let us know where and why you concentrated on certain items.
+We realize there are many items to look at when creating a user interface. Please do not feel like you have to do everything. Please feel free to use any front-end language you wish. Use your strengths to your advantage. If you gravitate more towards design, provide a more visually appealing interface. If you gravitate more towards data consumption, provide more capability by using the API routes. Give us a heads up by documenting your code to let us know where and why you concentrated on certain items.
 
 As you develop your solution, you may have ideas on other avenues to pursue. Please feel free to include them inline as documented source or as additional [Common Mark][commonmark] compliant notes in your fork.
 
