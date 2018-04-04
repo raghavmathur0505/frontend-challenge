@@ -7,11 +7,11 @@ We appreciate that any coding challenge represents an investment of your time. W
 If you are successful, then we will set up an in-person interview and use this code as the starting point in our conversation.
 
 # The Challenge
-Griffin Group Global create REST based microservices that are presented in a variety of ways. We use iOS native swift, Android based Java and JS based frameworks such as react for creating responsive web based presentations.
+Griffin Group Global creates REST based microservices that are presented in a variety of ways. We use iOS native swift, Android based Java and JS based frameworks such as React for creating responsive web based presentations.
 
-The challenge is to create a front end presentation for the [Star Wars API][swapi]. The idea is for you to have fun and br creative with your presentations. The star wars API has a standard restful interface for much of the star war suniverse data. These include:
+The challenge is to create a front end presentation for the [Star Wars API][swapi]. The idea is for you to have fun and be creative with your presentations. The star wars API has a standard restful interface for much of the star wars universe. These include:
 - [Planets](https://swapi.co/api/planets/)
-- [Spaceships](https://swapi.co/api/spaceships/)
+- [Spaceships](https://swapi.co/api/starships/)
 - [Vehicles](https://swapi.co/api/vehicles/)
 - [People](https://swapi.co/api/people/)
 - [Films](https://swapi.co/api/films/)
@@ -21,6 +21,7 @@ The challenge is to create a front end presentation for the [Star Wars API][swap
 We would like a minimum capability. These are:
 - Provide a presentation that provides a list of the star wars people
 - In this list, when the specific person is clicked, the persons name and gender are displayed.
+- Either a mobile application or a browser based presentation shall be created. If choosing a browser based presentation, it should render in Chrome, Safari and Firefox. IE and Edge support at your discretion.
 
 ## Where to concentrate your effort
 In a UX/UI presentation, there are many areas that could be addressed. While implementing the minimum requirements, please feel to implement one or more items in these areas. Please do not feel limited to these areas if you would like to add your take on frontend development.
