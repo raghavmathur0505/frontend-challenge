@@ -28,8 +28,8 @@
 
     <link rel="stylesheet" href="css/angular-material.css" />
     <link rel="stylesheet" href="css/angular-confirm.min.css" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 
 </head>
 
@@ -38,7 +38,7 @@
     <div ng-app="app-starWars" ng-controller="starWarsController as vm" style="height:500px;" layout="column" ng-cloak>
 
         <div>
-		<!-- Naviagtion Panel-->
+            <!-- Naviagtion Panel-->
             <div id="mySidenav" class="sidenav">
                 <h1 style="font-family:'Cookie', cursive;color:#fff;font-weight: normal;line-height:1; text-shadow:0 3px 0 rgba(0,0,0,0.1);">Star Wars</h1>
                 <a href="#" ng-click="vm.getPeoples()">People</a>
@@ -46,8 +46,8 @@
                 <a href="#" ng-click="vm.getStarships()">Star ships</a>
                 <a href="#" ng-click="vm.getFilms()">Films</a>
                 <a href="#" ng-click="vm.getVehicles()">Vehicles</a>
-				<a href="#" ng-click="vm.getSpecies()">Species</a>
-			
+                <a href="#" ng-click="vm.getSpecies()">Species</a>
+
             </div>
 
             <div ng-if="!vm.loadingScreen" style="margin-left: 25%">
@@ -93,7 +93,7 @@
                             <h1>Star Wars Vehicles</h1>
                             <ul>
                                 <li ng-repeat="item in vm.vehicles" ng-click="showAlert($event)" ng-class="{active:item.active}">
-                                    <a style=" color: white;" id="anchor" href="" ng-click="getSinglePeopleData(item)">{{item.name}}</a>
+                                    <a style=" color: white;" id="anchor" href="" ng-click="getSingleVehicleData(item)">{{item.name}}</a>
                                 </li>
                             </ul>
                         </form>
@@ -123,57 +123,62 @@
                         </form>
                     </div>
                 </div>
-				<div class="row" ng-if="vm.viewMap">
+                <div class="row" ng-if="vm.viewMap">
                     <div>
                         <form>
                             <h1>Person Information </h1>
-                            <ul >
+                            <ul>
                                 <li ng-class="{active:item.active}" style=" color: white;" id="anchor">
                                     Name: {{vm.singleData.name}}
                                 </li>
-								<li ng-class="{active:item.active}">
-								    URL:
+                                <li ng-class="{active:item.active}">
+                                    URL:
                                     <a style=" color: white;" id="anchor" href="{{vm.singleData.url}}"> {{vm.singleData.url}}</a>
                                 </li>
-								<li ng-class="{active:item.active}" style=" color: white;" id="anchor">
+                                <li ng-class="{active:item.active}" style=" color: white;" id="anchor">
                                     Gender: {{vm.singleData.gender}}
                                 </li>
-								<li ng-class="{active:item.active}" style=" color: white;" id="anchor">
+                                <li ng-class="{active:item.active}" style=" color: white;" id="anchor">
                                     Height: {{vm.singleData.height}}
                                 </li>
-								<li ng-class="{active:item.active}" style=" color: white;" id="anchor">
+                                <li ng-class="{active:item.active}" style=" color: white;" id="anchor">
                                     Mass: {{vm.singleData.mass}}
                                 </li>
-								<li ng-repeat="item in vm.singleData.films" ng-class="{active:item.active}" style=" color: white;" id="anchor">
-                                    Film URL: 
-									<a style=" color: white;" id="anchor" href="{{item}}"> {{item}} 
-									</a>
-                                </li>
-								
-							
                             </ul>
                         </form>
-					</div>
+                    </div>
                 </div>
-				
+                <div class="row" ng-if="vm.viewFilmMap.length !=vm.filmInfoSize && vm.viewMap">
+                    <div>
+                        <form>
+                            <h1>People->Film Mapping </h1>
+                            <ul>
+                                <li ng-repeat="item in vm.singleData.filmInfo" ng-class="{active:item.active}" style=" color: white;" id="anchor">
+                                    TITLE: {{item.title}} &nbsp; &nbsp; DIRECTOR: {{item.director}}
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+
             </div>
-			<!-- Loading Screen --> 
-			<div ng-if="vm.loadingScreen" layout="row" layout-sm="column" layout-align="space-around" style="margin-left: 25%; margin-top: 20%; ">
+            <!-- Loading Screen -->
+            <div ng-if="vm.loadingScreen" layout="row" layout-sm="column" layout-align="space-around" style="margin-left: 25%; margin-top: 20%; ">
                 <md-progress-circular md-mode="indeterminate" md-diameter="100px" value="80"></md-progress-circular>
-			
+
             </div>
-			
-			<!--Error Message in API request -->
-			<div class="alert alert-danger alert-dismissible fade in" style="margin-left: 25%; width: 70%; height: 20px; padding: 20px;" ng-show="vm.errorMessage">
-				{{vm.errorMessage}}
-			</div>
-			
-			
+
+            <!--Error Message in API request -->
+            <div class="alert alert-danger alert-dismissible fade in" style="margin-left: 25%; width: 70%; height: 20px; padding: 20px;" ng-show="vm.errorMessage">
+                {{vm.errorMessage}}
+            </div>
+
+
 
         </div>
     </div>
 </body>
 
- 
+
 
 </html>

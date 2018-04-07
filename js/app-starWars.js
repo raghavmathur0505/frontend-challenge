@@ -1,11 +1,11 @@
 (function() {
     "use strict";
-    angular.module("app-starWars", ["ngRoute", "ngMaterial"]).controller("starWarsController", starWarsController); 
-	//Controller- add dependencies
-    function starWarsController($http, $scope,$interval, $mdSidenav, $mdDialog, $window, $timeout, $cacheFactory, serverAddress) { 
+    angular.module("app-starWars", ["ngRoute", "ngMaterial"]).controller("starWarsController", starWarsController);
+    //Controller- add dependencies
+    function starWarsController($http, $scope, $interval, $mdSidenav, $mdDialog, $window, $timeout, $cacheFactory, serverAddress) {
 
         var vm = this;
-			
+
         /*
         Initialize variable/view models
         */
@@ -17,67 +17,114 @@
         vm.films = [];
         vm.singleData = {};
 
+        //Defines the page to view on UI
         vm.viewPeoples = false;
         vm.viewPlanets = false;
         vm.viewSpecies = false;
         vm.viewFilms = false;
         vm.viewVehicles = false;
         vm.viewStarships = false;
-		vm.viewMap = false;
-
+        vm.viewMap = false;
+        vm.viewFilmMap = false;
+        //SHow API error requests
         vm.errorMessage = "";
-        
-		vm.loadingScreen =false;
-		
-		/*
+        //Show loading screen during an API call
+        vm.loadingScreen = false;
+
+        vm.filmInfoSize = 0;
+        /*
         Create cache for all requests
         */
         $scope.keys = [];
-        $scope.cache = $cacheFactory(Math.round(Math.random()*10000));
-		
+        $scope.cache = $cacheFactory(Math.round(Math.random() * 10000));
+
         $scope.put = function(key, value) {
             if (angular.isUndefined($scope.cache.get(key))) {
                 $scope.keys.push(key);
             }
             $scope.cache.put(key, angular.isUndefined(value) ? null : value);
         };
-		
-		//reset cache after every 10 minutes
-		$interval(function(){ 
-				$scope.cache.removeAll(); 
-				$scope.keys = [];
-				console.log("Cache reset ");
-			}, 1000*60*10);
 
-		vm.clearErrorMessage = function(){
-			vm.errorMessage = "";
-		};
-		
+        //reset cache after every 10 minutes
+        $interval(function() {
+            $scope.cache.removeAll();
+            $scope.keys = [];
+            console.log("Cache reset ");
+        }, 1000 * 60 * 10);
+
+        vm.clearErrorMessage = function() {
+            vm.errorMessage = "";
+        };
+
 
         /*
         Method: get singlePerson's data
         */
         $scope.getSinglePeopleData = function(item) {
-			
-			vm.loadingScreen =true;
+            vm.filmInfoSize = 0;
+            vm.loadingScreen = true;
+            vm.viewFilmMap = false;
+            //item has all person's information
+            vm.singleData.url = item.url;
+            vm.singleData.name = item.name;
+            vm.singleData.gender = item.gender;
+            vm.singleData.height = item.height;
+            vm.singleData.mass = item.mass;
+            vm.singleData.films = item.films;
+            vm.singleData.filmInfo = [];
+            vm.filmInfoSize = item.films.length;
+			/*
+			Mapping people and Films data and displaying film information for each person on UI
+			*/
+            for (var i = 0; i < vm.singleData.films.length; i++) {
+                (function(i) {
+                    console.log("Calling function vm.singleDPEersonFilms");
+                    //check cache first
+                    if (angular.isUndefined($scope.cache.get(vm.singleData.films[i]))) {
+                        console.log("cache miss");
+                        $http.get(vm.singleData.films[i]).
+                        then(function(response) {
+                            //debugger;
+                            console.log("singlePeersonFilms: Response success");
+                            vm.errorMessage = "";
+                            vm.singleData.filmInfo.push(response.data);
+                            //put to cache
+                            $scope.put(vm.singleData.films[i], response.data);
 
-			//item has all person's information
-			vm.singleData.url =item.url;
-			vm.singleData.name =item.name;
-			vm.singleData.gender= item.gender;
-			vm.singleData.height= item.height;
-			vm.singleData.mass= item.mass;
-			vm.singleData.films= item.films;
-			
-			vm.loadingScreen =false;
-			vm.checkDisplay("map"); 
-			
+                        }, function(error) {
+                            //check errors
+                            console.log("singlePeersonFilms: Response error!" + error.status);
+                            vm.errorMessage = "Failed to load API data: " + error.status + " " + error.statusText;
+
+                        }).finally(function() {
+
+                        });
+
+                    } else {
+                        //if cache data found
+                        //get cache value
+                        vm.errorMessage = "";
+                        console.log("cache hit");
+                        //copy to viewModel
+                        vm.singleData.filmInfo.push($scope.cache.get(vm.singleData.films[i]));
+
+                    }
+                })(i);
+            }
+
+            $timeout(function() {
+                vm.loadingScreen = false;
+                vm.viewFilmMap = true;
+                console.log(vm.singleData.filmInfo);
+                vm.checkDisplay("map");
+            }, 500);
+
         }
-            
-     
-		/*
-		Change PageView as per the navigation option
-		*/
+
+
+        /*
+        Change PageView as per the navigation option
+        */
         vm.checkDisplay = function(arg) {
             vm.viewPeoples = false;
             vm.viewPlanets = false;
@@ -85,7 +132,7 @@
             vm.viewFilms = false;
             vm.viewVehicles = false;
             vm.viewStarships = false;
-			vm.viewMap = false;
+            vm.viewMap = false;
             console.log("Current View set to ->: Star Wars " + arg);
             switch (arg) {
                 case "peoples":
@@ -106,7 +153,7 @@
                 case "starships":
                     vm.viewStarships = true;
                     break;
-				case "map":
+                case "map":
                     vm.viewMap = true;
                     break;
                 default:
@@ -118,39 +165,39 @@
 		Method: get all planets data
 		*/
         vm.getPlanets = function() {
-			vm.loadingScreen = true;
+            vm.loadingScreen = true;
             console.log("Calling function vm.getPlanets");
             vm.planets = [];
-			//check cache first
-			if (angular.isUndefined($scope.cache.get("planets"))) {
+            //check cache first
+            if (angular.isUndefined($scope.cache.get("planets"))) {
                 console.log("cache miss");
                 $http.get(serverAddress + "planets").
                 then(function(response) {
-					debugger;
+                    debugger;
                     console.log("getPlanets: Response success");
                     vm.errorMessage = "";
                     vm.checkDisplay("planets");
                     angular.copy(response.data.results, vm.planets);
-					//put to cache
+                    //put to cache
                     $scope.put("planets", vm.planets);
-					
+
                 }, function(error) {
-					//check errors
-                    console.log("getPlanets: Response error!"+ error.status);
+                    //check errors
+                    console.log("getPlanets: Response error!" + error.status);
                     vm.errorMessage = "Failed to load API data: " + error.status + " " + error.statusText;
 
                 }).finally(function() {
-					vm.loadingScreen = false;
+                    vm.loadingScreen = false;
                 });
-				
+
             } else {
-				//if cache data found
-				vm.checkDisplay("planets");
+                //if cache data found
+                vm.checkDisplay("planets");
                 //get cache value
                 vm.loadingScreen = false;
-				vm.errorMessage = "";
+                vm.errorMessage = "";
                 console.log("cache hit");
-				//copy to viewModel
+                //copy to viewModel
                 angular.copy($scope.cache.get("planets"), vm.planets);
             }
 
@@ -159,37 +206,37 @@
 		Method: get all people data
 		*/
         vm.getPeoples = function() {
-			vm.loadingScreen = true;
+            vm.loadingScreen = true;
             console.log("Calling function vm.getPeoples");
             vm.peoples = [];
             if (angular.isUndefined($scope.cache.get("people"))) {
                 console.log("cache miss");
                 $http.get(serverAddress + "people").
                 then(function(response) {
-                    debugger;
+                    //debugger;
                     console.log("getPeoples: Response success");
                     vm.errorMessage = "";
                     //vm.peoples = response.data.results;
                     angular.copy(response.data.results, vm.peoples);
                     //cache response data
                     $scope.put("people", vm.peoples);
-					vm.checkDisplay("peoples");
+                    vm.checkDisplay("peoples");
                 }, function(error) {
-                    console.log("getPeoples: Response error!"+error.status);
+                    console.log("getPeoples: Response error!" + error.status);
                     vm.errorMessage = "Failed to load API data: " + error.status + " " + error.statusText;
 
                 }).finally(function() {
-						vm.loadingScreen =false;
+                    vm.loadingScreen = false;
                 });
             } else {
-				
+
                 //get cache value
-                vm.loadingScreen =false;
-				vm.errorMessage = "";
+                vm.loadingScreen = false;
+                vm.errorMessage = "";
                 console.log("cache hit");
-				angular.copy($scope.cache.get("people"), vm.peoples);
-				vm.checkDisplay("peoples");
-                }
+                angular.copy($scope.cache.get("people"), vm.peoples);
+                vm.checkDisplay("peoples");
+            }
 
         }
 
@@ -197,9 +244,9 @@
 		Method: get all vehicles data
 		*/
         vm.getVehicles = function() {
-			vm.loadingScreen = true;
+            vm.loadingScreen = true;
             console.log("Calling function vm.getVehicles");
-			vm.vehicles =[];
+            vm.vehicles = [];
             if (angular.isUndefined($scope.cache.get("vehicles"))) {
                 console.log("cache miss");
                 $http.get(serverAddress + "vehicles").
@@ -212,17 +259,17 @@
                     $scope.put("vehicles", vm.vehicles);
 
                 }, function(error) {
-                    console.log("getVehicles: Response error!"+error.status);
-                  
+                    console.log("getVehicles: Response error!" + error.status);
+
                     vm.errorMessage = "Failed to load API data: " + error.status + " " + error.statusText;
 
                 }).finally(function() {
-					vm.loadingScreen = false;
+                    vm.loadingScreen = false;
                 });
             } else {
-				vm.checkDisplay("vehicles");
+                vm.checkDisplay("vehicles");
                 vm.loadingScreen = false;
-				vm.errorMessage = "";
+                vm.errorMessage = "";
                 console.log("cache hit");
                 angular.copy($scope.cache.get("vehicles"), vm.vehicles);
             }
@@ -232,9 +279,9 @@
 		Method: get all films data
 		*/
         vm.getFilms = function() {
-			vm.loadingScreen = true;
+            vm.loadingScreen = true;
             console.log("Calling function vm.getFilms");
-			vm.films = [];
+            vm.films = [];
             if (angular.isUndefined($scope.cache.get("films"))) {
                 console.log("cache miss");
                 $http.get(serverAddress + "films").
@@ -247,17 +294,17 @@
                     $scope.put("films", vm.films);
 
                 }, function(error) {
-                    console.log("getFilms: Response error!"+error.status);
-                   
+                    console.log("getFilms: Response error!" + error.status);
+
                     vm.errorMessage = "Failed to load API data: " + error.status + " " + error.statusText;
 
                 }).finally(function() {
-					vm.loadingScreen = false;
+                    vm.loadingScreen = false;
                 });
             } else {
-				vm.checkDisplay("films");
+                vm.checkDisplay("films");
                 vm.loadingScreen = false;
-				vm.errorMessage = "";
+                vm.errorMessage = "";
                 console.log("cache hit");
                 angular.copy($scope.cache.get("films"), vm.films);
             }
@@ -269,9 +316,9 @@
         Method: get all starships data
         */
         vm.getStarships = function() {
-			vm.loadingScreen = true;
+            vm.loadingScreen = true;
             console.log("Calling function vm.getStarships");
-			vm.starships = [];
+            vm.starships = [];
             if (angular.isUndefined($scope.cache.get("starships"))) {
                 console.log("cache miss");
                 $http.get(serverAddress + "starships").
@@ -284,17 +331,17 @@
                     $scope.put("starships", vm.starships);
 
                 }, function(error) {
-                    console.log("getStarships: Response error!"+error.status);
+                    console.log("getStarships: Response error!" + error.status);
                     vm.errorMessage = "Failed to load API data: " + error.status + " " + error.statusText;
 
                 }).finally(function() {
-					vm.loadingScreen = false;
+                    vm.loadingScreen = false;
                 });
             } else {
-				vm.checkDisplay("starships");
+                vm.checkDisplay("starships");
                 vm.loadingScreen = false;
                 vm.errorMessage = "";
-				console.log("cache hit");
+                console.log("cache hit");
                 angular.copy($scope.cache.get("starships"), vm.starships);
             }
         }
@@ -302,13 +349,13 @@
 		Method: get all species data
 		*/
         vm.getSpecies = function() {
-			vm.loadingScreen = true;
+            vm.loadingScreen = true;
             console.log("Calling function vm.getSpecies");
-            vm.species  = [];
-			if (angular.isUndefined($scope.cache.get("species"))) {
+            vm.species = [];
+            if (angular.isUndefined($scope.cache.get("species"))) {
                 console.log("cache miss");
                 $http.get(serverAddress + "species").
-                  then(function(response) {
+                then(function(response) {
                     debugger;
                     console.log("getSpecies:Response success");
                     vm.errorMessage = "";
@@ -317,17 +364,17 @@
                     $scope.put("species", vm.species);
 
                 }, function(error) {
-                    console.log("getSpecies: Response error!"+error.status);
-                 
+                    console.log("getSpecies: Response error!" + error.status);
+
                     vm.errorMessage = "Failed to load API data: " + error.status + " " + error.statusText;
-					
+
                 }).finally(function() {
-					vm.loadingScreen = false;
+                    vm.loadingScreen = false;
                 });
             } else {
-				vm.checkDisplay("species");
+                vm.checkDisplay("species");
                 vm.loadingScreen = false;
-				vm.errorMessage = "";
+                vm.errorMessage = "";
                 console.log("cache hit");
                 angular.copy($scope.cache.get("species"), vm.species);
             }
@@ -338,7 +385,7 @@
             //by Default- main page display
             vm.getPeoples();
         };
-		//call onLoad() function on page load
+        //call onLoad() function on page load
         vm.onLoad();
 
     }
